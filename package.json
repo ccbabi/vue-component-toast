@@ -10,9 +10,10 @@
     "dist:watch": "NODE_ENV=development rollup -c --watch",
     "minify": "uglifyjs dist/vc-toast.js --compress --mangle -o dist/vc-toast.min.js",
     "build": "npm run dist && npm run minify",
+    "commit": "git commit -am build${npm_package_version}",
     "tag": "git tag ${npm_package_version}",
     "push": "git push origin master --tags",
-    "postpublish": "npm run tag && npm run push",
+    "postpublish": "npm run commit && npm run tag && npm run push",
     "prepublish": "npm run build"
   },
   "repository": {
