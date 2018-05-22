@@ -9,7 +9,11 @@
     "dist": "NODE_ENV=production rollup -c",
     "dist:watch": "NODE_ENV=development rollup -c --watch",
     "minify": "uglifyjs dist/vc-toast.js --compress --mangle -o dist/vc-toast.min.js",
-    "build": "npm run dist && npm run minify"
+    "build": "npm run dist && npm run minify",
+    "tag": "git tag ${npm_package_version}",
+    "push": "git push origin master --tags",
+    "postpublish": "npm run tag && npm run push",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -21,6 +25,9 @@
   "bugs": {
     "url": "https://github.com/ccbabi/vue-component-toast/issues"
   },
+  "files": [
+    "dist"
+  ],
   "homepage": "https://github.com/ccbabi/vue-component-toast#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
