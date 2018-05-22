@@ -1,0 +1,37 @@
+{
+  "name": "vue-component-toast",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/vc-toast.js",
+  "module": "dist/vc-toast.es.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "NODE_ENV=production rollup -c",
+    "dist:watch": "NODE_ENV=development rollup -c --watch",
+    "minify": "uglifyjs dist/vc-toast.js --compress --mangle -o dist/vc-toast.min.js",
+    "build": "npm run dist && npm run minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccbabi/vue-component-toast.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ccbabi/vue-component-toast/issues"
+  },
+  "homepage": "https://github.com/ccbabi/vue-component-toast#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-vue": "^4.1.4",
+    "uglify-js": "^3.3.26",
+    "vue-template-compiler": "^2.5.16"
+  }
+}
