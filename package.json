@@ -1,26 +1,20 @@
 {
   "name": "vue-component-toast",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "Easy to use vue toast component.",
   "main": "dist/vc-toast.js",
   "module": "dist/vc-toast.es.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf dist/*",
+    "predist": "npm run clean",
     "dist": "NODE_ENV=production rollup -c",
-    "dist:watch": "NODE_ENV=development rollup -c --watch",
-    "minify": "uglifyjs dist/vc-toast.js --compress --mangle -o dist/vc-toast.min.js",
-    "build": "npm run dist && npm run minify",
-    "commit": "git commit -am build${npm_package_version}",
-    "tag": "git tag ${npm_package_version}",
-    "push": "git push origin master --tags",
-    "postpublish": "npm run commit && npm run tag && npm run push",
-    "prepublish": "npm run build"
+    "postpublish": "git tag ${npm_package_version} && git push origin master --tags"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ccbabi/vue-component-toast.git"
   },
-  "keywords": [],
+  "keywords": ["vue", "component", "toast"],
   "author": "",
   "license": "MIT",
   "bugs": {
@@ -35,11 +29,14 @@
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
+    "rimraf": "^2.6.2",
     "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-commonjs": "^9.1.3",
     "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-postcss": "^1.6.1",
     "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-uglify": "^4.0.0",
     "rollup-plugin-vue": "^4.1.4",
-    "uglify-js": "^3.3.26",
     "vue-template-compiler": "^2.5.16"
   }
 }

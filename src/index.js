@@ -1,4 +1,5 @@
 import toast from './toast.vue'
+import './toast.css'
 
 const positions = ['top', 'middle', 'bottom']
 
@@ -73,9 +74,7 @@ function init (Vue, useOption) {
     const option = { ...defaultOption, ...callOption }
 
     if (option.override) {
-      instancePoll.getInUseInstances().forEach(inUseInstance => {
-        if (instance !== inUseInstance) inUseInstance.close()
-      })
+      instancePoll.getInUseInstances().forEach(inUseInstance => inUseInstance.close())
     }
 
     if (!~positions.indexOf(option.position)) {
@@ -93,8 +92,14 @@ function init (Vue, useOption) {
   }
 }
 
-export default {
-  install (Vue, useOption) {
-    Vue.$toast = Vue.prototype.$toast = init(Vue, useOption)
-  }
+function install (Vue, useOption) {
+  Vue.$toast = Vue.prototype.$toast = init(Vue, useOption)
+}
+
+export default { install }
+
+if (window.Vue) {
+  setTimeout(() => {
+    Vue.use(window['vc-toast'], window.vcToastOption || {})  // eslint-disable-line no-undef
+  }, 0)
 }

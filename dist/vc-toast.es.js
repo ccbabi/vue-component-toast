@@ -1,3 +1,12 @@
+//
+//
+//
+//
+//
+//
+//
+//
+
 var script = {
   name: 'vc-toast',
   props: {
@@ -42,44 +51,24 @@ var script = {
 
 var __vue_script__ = script;
 
+/* template */
 var __vue_render__ = function __vue_render__() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c("transition", { attrs: { name: "vc-toast" }, on: { "after-leave": _vm.afterLeave } }, [_c("div", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.show,
-      expression: "show"
-    }],
-    staticClass: "vc-toast",
-    class: _vm.classes,
-    style: _vm.styles
-  }, [_vm.iconClass !== "" ? _c("i", { staticClass: "vc-toast-icon", class: _vm.iconClass }) : _vm._e(), _vm._v(" "), _c("span", { staticClass: "vc-toast-text" }, [_vm._v(_vm._s(_vm.message))])])]);
+  var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('transition', { attrs: { "name": "vc-toast" }, on: { "after-leave": _vm.afterLeave } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.show, expression: "show" }], staticClass: "vc-toast", class: _vm.classes, style: _vm.styles }, [_vm.iconClass !== '' ? _c('i', { staticClass: "vc-toast-icon", class: _vm.iconClass }) : _vm._e(), _vm._v(" "), _c('span', { staticClass: "vc-toast-text" }, [_vm._v(_vm._s(_vm.message))])])]);
 };
 var __vue_staticRenderFns__ = [];
-__vue_render__._withStripped = true;
 
 var __vue_template__ = typeof __vue_render__ !== 'undefined' ? { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ } : {};
-
-var __vue_inject_styles__ = function (inject) {
-  if (!inject) return;
-  inject("data-v-5fbd2d7f_0", { source: "\n.vc-toast {\n  position: fixed;\n  max-width: 80%;\n  border-radius: 5px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  box-sizing: border-box;\n  text-align: center;\n  z-index: 1000;\n  padding: .6em 1em;\n}\n.vc-toast-top {\n  left: 50%;\n  top: 50px;\n  transform: translate(-50%, 0);\n}\n.vc-toast-middle {\n  left: 50%;\n  top: 50%;\n  transform: translate(-50%, -50%);\n}\n.vc-toast-bottom {\n  left: 50%;\n  bottom: 50px;\n  transform: translate(-50%, 0);\n}\n.vc-toast-icon {\n  display: block;\n  font-size: 56px;\n  padding: 6px 0 10px;\n}\n.vc-toast-text {\n  display: block;\n  font-size: 14px;\n  line-height: 1.75\n}\n.vc-toast-enter-active,\n.vc-toast-leave-active {\n  transition: opacity .3s;\n}\n.vc-toast-enter,\n.vc-toast-leave-to,\n.vc-toast-leave-active {\n  opacity: 0;\n}\n\n", map: undefined, media: undefined });
-};
-
+/* style */
+var __vue_inject_styles__ = undefined;
+/* scoped */
 var __vue_scope_id__ = undefined;
-
+/* module identifier */
 var __vue_module_identifier__ = undefined;
-
+/* functional template */
 var __vue_is_functional_template__ = false;
-
+/* component normalizer */
 function __vue_normalize__(template, style, script$$1, scope, functional, moduleIdentifier, createInjector, createInjectorSSR) {
   var component = script$$1 || {};
-
-  {
-    component.__file = "/Users/wangjie/repositories/vue-component-toast/src/toast.vue";
-  }
 
   if (!component.render) {
     component.render = template.render;
@@ -91,38 +80,16 @@ function __vue_normalize__(template, style, script$$1, scope, functional, module
 
   component._scopeId = scope;
 
-  {
-    var hook = void 0;
-    if (style) {
-      hook = function hook(context) {
-        style.call(this, createInjector(context));
-      };
-    }
-
-    if (hook !== undefined) {
-      if (component.functional) {
-        var originalRender = component.render;
-        component.render = function renderWithStyleInjection(h, context) {
-          hook.call(context);
-          return originalRender(h, context);
-        };
-      } else {
-        var existing = component.beforeCreate;
-        component.beforeCreate = existing ? [].concat(existing, hook) : [hook];
-      }
-    }
-  }
-
   return component;
 }
-
+/* style inject */
 function __vue_create_injector__() {
   var head = document.head || document.getElementsByTagName('head')[0];
   var styles = __vue_create_injector__.styles || (__vue_create_injector__.styles = {});
   var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
 
   return function addStyle(id, css) {
-    if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return;
+    if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return; // SSR styles are present.
 
     var group = isOldIE ? css.media || 'default' : id;
     var style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
@@ -132,6 +99,14 @@ function __vue_create_injector__() {
       var index = style.ids.length;
 
       style.ids.push(id);
+
+      if (css.map) {
+        // https://developer.chrome.com/devtools/docs/javascript-debugging
+        // this makes source maps inside style tags work properly in Chrome
+        code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+        // http://stackoverflow.com/a/26603875
+        code += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) + ' */';
+      }
 
       if (isOldIE) {
         style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -167,7 +142,7 @@ function __vue_create_injector__() {
     }
   };
 }
-
+/* style inject SSR */
 
 var toast = __vue_normalize__(__vue_template__, __vue_inject_styles__, typeof __vue_script__ === 'undefined' ? {} : __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, typeof __vue_create_injector__ !== 'undefined' ? __vue_create_injector__ : function () {}, typeof __vue_create_injector_ssr__ !== 'undefined' ? __vue_create_injector_ssr__ : function () {});
 
@@ -264,7 +239,7 @@ function init(Vue, useOption) {
 
     if (option.override) {
       instancePoll.getInUseInstances().forEach(function (inUseInstance) {
-        if (instance !== inUseInstance) inUseInstance.close();
+        return inUseInstance.close();
       });
     }
 
@@ -285,10 +260,16 @@ function init(Vue, useOption) {
   };
 }
 
-var index = {
-  install: function install(Vue, useOption) {
-    Vue.$toast = Vue.prototype.$toast = init(Vue, useOption);
-  }
-};
+function install(Vue, useOption) {
+  Vue.$toast = Vue.prototype.$toast = init(Vue, useOption);
+}
+
+var index = { install: install };
+
+if (window.Vue) {
+  setTimeout(function () {
+    Vue.use(window['vc-toast'], window.vcToastOption || {}); // eslint-disable-line no-undef
+  }, 0);
+}
 
 export default index;
