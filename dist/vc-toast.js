@@ -40,7 +40,7 @@
       classes: function classes() {
         var cls = [];
         if (this.className) cls.push(this.className);
-        cls.push('vc-toast-' + this.position);
+        cls.push('is-' + this.position);
         return cls;
       },
       styles: function styles() {
@@ -59,9 +59,23 @@
 
   /* template */
   var __vue_render__ = function __vue_render__() {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('transition', { attrs: { "name": "vc-toast" }, on: { "after-leave": _vm.afterLeave } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.show, expression: "show" }], staticClass: "vc-toast", class: _vm.classes, style: _vm.styles }, [_vm.iconClass !== '' ? _c('i', { staticClass: "vc-toast-icon", class: _vm.iconClass }) : _vm._e(), _vm._v(" "), _c('span', { staticClass: "vc-toast-text" }, [_vm._v(_vm._s(_vm.message))])])]);
+    var _vm = this;
+    var _h = _vm.$createElement;
+    var _c = _vm._self._c || _h;
+    return _c("transition", { attrs: { name: "vc-toast" }, on: { "after-leave": _vm.afterLeave } }, [_c("div", {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: _vm.show,
+        expression: "show"
+      }],
+      staticClass: "vc-toast",
+      class: _vm.classes,
+      style: _vm.styles
+    }, [_vm.iconClass !== "" ? _c("i", { staticClass: "vc-toast-icon", class: _vm.iconClass }) : _vm._e(), _vm._v(" "), _c("span", { staticClass: "vc-toast-text" }, [_vm._v(_vm._s(_vm.message))])])]);
   };
   var __vue_staticRenderFns__ = [];
+  __vue_render__._withStripped = true;
 
   var __vue_template__ = typeof __vue_render__ !== 'undefined' ? { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ } : {};
   /* style */
@@ -75,6 +89,10 @@
   /* component normalizer */
   function __vue_normalize__(template, style, script$$1, scope, functional, moduleIdentifier, createInjector, createInjectorSSR) {
     var component = script$$1 || {};
+
+    {
+      component.__file = "/Users/wangjie/repositories/vue-component-toast/src/toast.vue";
+    }
 
     if (!component.render) {
       component.render = template.render;
@@ -105,14 +123,6 @@
         var index = style.ids.length;
 
         style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) + ' */';
-        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');

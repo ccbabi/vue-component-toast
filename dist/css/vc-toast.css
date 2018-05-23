@@ -7,46 +7,36 @@
   box-sizing: border-box;
   text-align: center;
   z-index: 1000;
-  padding: .6em 1em;
+  padding: .6em 1em
 }
-
-.vc-toast-top {
-  left: 50%;
-  top: 50px;
-  transform: translate(-50%, 0);
+.vc-toast.is-bottom {
+    left: 50%;
+    bottom: 50px;
+    transform: translate(-50%, 0)
 }
-
-.vc-toast-middle {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+.vc-toast.is-middle {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%)
 }
-
-.vc-toast-bottom {
-  left: 50%;
-  bottom: 50px;
-  transform: translate(-50%, 0);
+.vc-toast.is-top {
+    left: 50%;
+    top: 50px;
+    transform: translate(-50%, 0)
 }
-
 .vc-toast-icon {
-  display: block;
-  font-size: 56px;
-  padding: 6px 0 10px;
+    display: block;
+    font-size: 56px;
+    padding: 6px 0 10px
 }
-
 .vc-toast-text {
-  display: block;
-  font-size: 14px;
-  line-height: 1.75
+    display: block;
+    font-size: 14px;
+    line-height: 1.75
 }
-
-.vc-toast-enter-active,
-.vc-toast-leave-active {
-  transition: opacity .3s;
+.vc-toast-enter-active, .vc-toast-leave-active {
+    transition: opacity .3s
 }
-
-.vc-toast-enter,
-.vc-toast-leave-to,
-.vc-toast-leave-active {
-  opacity: 0;
+.vc-toast-enter, .vc-toast-leave-to, .vc-toast-leave-active {
+    opacity: 0
 }

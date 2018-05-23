@@ -1,4 +1,4 @@
-.vc-toast {
+@b toast {
   position: fixed;
   max-width: 80%;
   border-radius: 5px;
@@ -8,45 +8,42 @@
   text-align: center;
   z-index: 1000;
   padding: .6em 1em;
-}
 
-.vc-toast-top {
-  left: 50%;
-  top: 50px;
-  transform: translate(-50%, 0);
-}
+  @w top {
+    left: 50%;
+    top: 50px;
+    transform: translate(-50%, 0);
+  }
 
-.vc-toast-middle {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
+  @w middle {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-.vc-toast-bottom {
-  left: 50%;
-  bottom: 50px;
-  transform: translate(-50%, 0);
-}
+  @w bottom {
+    left: 50%;
+    bottom: 50px;
+    transform: translate(-50%, 0);
+  }
 
-.vc-toast-icon {
-  display: block;
-  font-size: 56px;
-  padding: 6px 0 10px;
-}
+  @e icon {
+    display: block;
+    font-size: 56px;
+    padding: 6px 0 10px;
+  }
 
-.vc-toast-text {
-  display: block;
-  font-size: 14px;
-  line-height: 1.75
-}
+  @e text {
+    display: block;
+    font-size: 14px;
+    line-height: 1.75
+  }
 
-.vc-toast-enter-active,
-.vc-toast-leave-active {
-  transition: opacity .3s;
-}
+  @e enter-active, leave-active {
+    transition: opacity .3s;
+  }
 
-.vc-toast-enter,
-.vc-toast-leave-to,
-.vc-toast-leave-active {
-  opacity: 0;
+  @e enter, leave-to, leave-active {
+    opacity: 0;
+  }
 }

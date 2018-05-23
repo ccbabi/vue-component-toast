@@ -33,7 +33,7 @@
       classes () {
         const cls = []
         if (this.className) cls.push(this.className)
-        cls.push(`vc-toast-${this.position}`)
+        cls.push(`is-${this.position}`)
         return cls
       },
       styles () {

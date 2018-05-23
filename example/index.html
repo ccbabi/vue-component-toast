@@ -36,6 +36,10 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="../dist/vc-toast.min.js"></script>
   <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+    ':35729/livereload.js?snipver=1"></' + 'script>')
+  </script>
+  <script>
     // Vue.$toast({ message: '这是测试的一段文字' })
     var icons = ['search', 'more', 'back', 'field-error', 'field-warning', 'success', 'field-success']
     new Vue({

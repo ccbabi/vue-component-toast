@@ -5,6 +5,24 @@ import replace from 'rollup-plugin-replace'
 import babel from 'rollup-plugin-babel'
 import postcss from 'rollup-plugin-postcss'
 import { uglify } from 'rollup-plugin-uglify'
+import bem from 'saladcss-bem'
+import cssnano from 'cssnano'
+
+const bemOption = {
+  defaultNamespace: 'vc',
+  style: 'suit',
+  separators: {
+    descendent: '-'
+  },
+  shortcuts: {
+    'component-namespace': 'n',
+    utility: 'u',
+    component: 'b',
+    descendent: 'e',
+    modifier: 'm',
+    when: 'w'
+  }
+}
 
 export default [{
   input: 'src/index.js',
@@ -18,7 +36,10 @@ export default [{
     commonjs(),
     VuePlugin(),
     postcss({
-      extract: 'dist/css/vc-toast.css'
+      extract: 'dist/css/vc-toast.css',
+      plugins: [
+        bem(bemOption)
+      ]
     }),
     replace({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
@@ -38,7 +59,11 @@ export default [{
     VuePlugin(),
     postcss({
       extract: 'dist/css/vc-toast.min.css',
-      minimize: true
+      minimize: true,
+      plugins: [
+        bem(bemOption),
+        cssnano()
+      ]
     }),
     replace({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
