@@ -1,16 +1,16 @@
 {
   "name": "vue-component-toast",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Easy to use vue toast component.",
   "main": "dist/vc-toast.js",
   "module": "dist/vc-toast.es.js",
   "scripts": {
     "clean": "rimraf dist/*",
-    "predist": "npm run clean",
     "dev": "rollup -c --watch",
     "reload": "livereload dist/ -d",
     "watch": "run-p reload dev",
-    "dist": "NODE_ENV=production rollup -c",
+    "prebuild": "npm run clean",
+    "build": "NODE_ENV=production rollup -c",
     "postpublish": "git tag ${npm_package_version} && git push origin master --tags"
   },
   "repository": {

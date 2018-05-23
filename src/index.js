@@ -97,9 +97,3 @@ function install (Vue, useOption) {
 }
 
 export default { install }
-
-if (window.Vue) {
-  setTimeout(() => {
-    Vue.use(window['vc-toast'], window.vcToastOption || {})  // eslint-disable-line no-undef
-  }, 0)
-}

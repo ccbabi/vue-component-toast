@@ -5,10 +5,13 @@ $ npm install --save vue-component-toast
 ```
 
 ## Usage
+
+### Npm
 ```javascript
 import toast from 'vue-component-toast'
 import 'vue-component-toast/dist/css/vc-toast.css'
 
+// Vue.use(toast, [<global-option>])
 Vue.use(toast)
 
 // Vue property
@@ -18,6 +21,18 @@ Vue.$toast('this is the prompt message.')
 vm.$toast({ message: 'this is the prompt message.' })
 ```
 
+### Script
+```javascript
+// Vue.use(window['vc-toast'], [<global-option>])
+Vue.use(window['vc-toast'])
+
+// Vue property
+Vue.$toast('this is the prompt message.')
+
+// Vue instance property
+vm.$toast({ message: 'this is the prompt message.' })
+
+```
 
 ## API
 ### Grammar: 
