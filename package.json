@@ -1,6 +1,6 @@
 {
   "name": "vue-component-toast",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Easy to use vue toast component.",
   "main": "dist/vc-toast.js",
   "module": "dist/vc-toast.es.js",
@@ -24,6 +24,9 @@
     "dist"
   ],
   "homepage": "https://github.com/ccbabi/vue-component-toast#readme",
+  "peerDependencies": {
+    "vue": "2.x"
+  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",

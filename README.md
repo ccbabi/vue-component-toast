@@ -7,7 +7,7 @@ $ npm install --save vue-component-toast
 ## Usage
 ```javascript
 import toast from 'vue-component-toast'
-import '~vue-component-toast/dist/css/vc-toast.css'
+import 'vue-component-toast/dist/css/vc-toast.css'
 
 Vue.use(toast)
 
@@ -36,7 +36,7 @@ vm.$toast({ message: 'this is the prompt message.' })
 
 ## Toast
 ### Instance methods
-- toast.close(): Close the toast prompt
+- toast.close(): Close the toast prompt
 
 ## License
 MIT
