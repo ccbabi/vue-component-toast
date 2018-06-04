@@ -6,37 +6,75 @@
   color: #fff;
   box-sizing: border-box;
   text-align: center;
-  z-index: 1000;
-  padding: .6em 1em
+  z-index: 1001
 }
+
+
 .vc-toast.is-bottom {
     left: 50%;
     bottom: 50px;
     transform: translate(-50%, 0)
 }
+
+
 .vc-toast.is-middle {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%)
 }
+
+
 .vc-toast.is-top {
     left: 50%;
     top: 50px;
     transform: translate(-50%, 0)
 }
+
+
 .vc-toast-icon {
     display: block;
     font-size: 56px;
     padding: 6px 0 10px
 }
+
+
 .vc-toast-text {
     display: block;
     font-size: 14px;
     line-height: 1.75
 }
+
+
+.vc-toast-mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000
+}
+
+
 .vc-toast-enter-active, .vc-toast-leave-active {
     transition: opacity .3s
 }
+
+
 .vc-toast-enter, .vc-toast-leave-to, .vc-toast-leave-active {
     opacity: 0
+}
+
+
+@media (-webkit-min-device-pixel-ratio: 2) {
+  .vc-toast {}
+  .vc-toast-text {
+      font-size: 28px
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 3) {
+  .vc-toast {}
+  .vc-toast-text {
+      font-size: 42px
+  }
 }

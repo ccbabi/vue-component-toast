@@ -12,6 +12,9 @@
   //
   //
   //
+  //
+  //
+  //
 
   var script = {
     name: 'vc-toast',
@@ -28,6 +31,10 @@
       iconClass: {
         type: String,
         default: ''
+      },
+      mask: {
+        type: Boolean,
+        default: false
       }
     },
     data: function data() {
@@ -37,20 +44,15 @@
     },
 
     computed: {
-      classes: function classes() {
-        var cls = [];
-        if (this.className) cls.push(this.className);
-        cls.push('is-' + this.position);
-        return cls;
-      },
       styles: function styles() {
-        var padding = this.iconClass ? '.6em 2em' : '.5em 1em';
+        var padding = this.iconClass ? '.6em 2em' : '.4em .8em';
         return { padding: padding };
       }
     },
     methods: {
-      afterLeave: function afterLeave(el) {
-        el.parentNode.removeChild(el);
+      afterLeave: function afterLeave() {
+        if (this.__destroy) this.$destroy();
+        this.$el.parentNode.removeChild(this.$el);
       }
     }
   };
@@ -59,7 +61,7 @@
 
   /* template */
   var __vue_render__ = function __vue_render__() {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('transition', { attrs: { "name": "vc-toast" }, on: { "after-leave": _vm.afterLeave } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.show, expression: "show" }], staticClass: "vc-toast", class: _vm.classes, style: _vm.styles }, [_vm.iconClass !== '' ? _c('i', { staticClass: "vc-toast-icon", class: _vm.iconClass }) : _vm._e(), _vm._v(" "), _c('span', { staticClass: "vc-toast-text" }, [_vm._v(_vm._s(_vm.message))])])]);
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { class: _vm.className }, [_vm.mask ? _c('div', { staticClass: "vc-toast-mask" }) : _vm._e(), _vm._v(" "), _c('transition', { attrs: { "name": "vc-toast" }, on: { "after-leave": _vm.afterLeave } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.show, expression: "show" }], class: ['vc-toast', "is-" + this.position], style: _vm.styles }, [_vm.iconClass !== '' ? _c('i', { staticClass: "vc-toast-icon", class: _vm.iconClass }) : _vm._e(), _vm._v(" "), _c('span', { staticClass: "vc-toast-text" }, [_vm._v(_vm._s(_vm.message))])])])], 1);
   };
   var __vue_staticRenderFns__ = [];
 
@@ -174,29 +176,42 @@
     duration: 3000,
     className: '',
     iconClass: '',
-    override: true
+    override: true,
+    mask: false
   };
 
   var instancePoll = void 0;
 
   function getInstancePoll(instanceFactory) {
-    var inUseInstances = [];
+    var maxSize = 10;
+    var defKey = Math.random().toString(36).slice(2);
+    var inUseInstances = {};
     var nonUseInStances = [];
+    var count = 0;
 
     return {
-      pick: function pick() {
-        var instance = nonUseInStances.length ? nonUseInStances.shift() : instanceFactory();
-        inUseInstances.push(instance);
+      pick: function pick(key) {
+        var instance = nonUseInStances.length ? nonUseInStances.shift() : instanceFactory(count++);
+
+        key = key || defKey;
+        instance.pid = instance.pid || count;
+
+        if (!inUseInstances[key]) inUseInstances[key] = [];
+
+        inUseInstances[key].push(instance);
+
         return instance;
       },
-      recycle: function recycle(val) {
-        var index = inUseInstances.indexOf(val);
-        if (~index) inUseInstances.splice(index, 1);
-        nonUseInStances.push(val);
+      recycle: function recycle(val, callback) {
+        var key = val.position;
+        var index = inUseInstances[key].indexOf(val);
+
+        if (~index) inUseInstances[key].splice(index, 1);
+        if (val.pid > maxSize) callback && callback();else nonUseInStances.push(val);
       },
 
-      getInUseInstances: function getInUseInstances() {
-        return inUseInstances;
+      getInUseInstances: function getInUseInstances(key) {
+        return inUseInstances[key || defKey] || [];
       }
     };
   }
@@ -214,16 +229,20 @@
     };
 
     Toast.prototype.close = function () {
+      var _this = this;
+
       if (!this.show) return;
       this.show = false;
-      instancePoll.recycle(this);
+      instancePoll.recycle(this, function () {
+        _this.__destroy = true;
+      });
     };
 
     Toast.prototype.__set = function (data) {
-      var _this = this;
+      var _this2 = this;
 
       Object.keys(data).forEach(function (key) {
-        _this[key] = data[key];
+        _this2[key] = data[key];
       });
     };
 
@@ -233,9 +252,11 @@
   function init(Vue, useOption) {
     var defaultOption = _extends({}, def, useOption);
     var Toast = initToast(Vue);
+
     instancePoll = getInstancePoll(function () {
       return new Toast();
     });
+
     return function (callOption) {
       if (typeof callOption === 'string') {
         callOption = { message: callOption };
@@ -243,20 +264,20 @@
 
       var option = _extends({}, defaultOption, callOption);
 
-      if (option.override) {
-        instancePoll.getInUseInstances().forEach(function (inUseInstance) {
-          return inUseInstance.close();
-        });
-      }
-
       if (!~positions.indexOf(option.position)) {
         option.position = 'middle';
       }
 
-      var instance = instancePoll.pick(option.override).__show(option);
-      clearTimeout(instance.timeoutId);
+      if (option.override) {
+        instancePoll.getInUseInstances(option.position).forEach(function (inUseInstance) {
+          inUseInstance.close();
+          clearTimeout(inUseInstance.timeoutId);
+        });
+      }
 
-      if (option.duration) {
+      var instance = instancePoll.pick(option.position).__show(option);
+
+      if (option.duration && option.duration - 0 > 0) {
         instance.timeoutId = setTimeout(function () {
           return instance.close();
         }, option.duration);

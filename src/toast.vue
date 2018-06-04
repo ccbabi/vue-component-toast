@@ -1,10 +1,13 @@
 <template>
-  <transition name="vc-toast" @after-leave="afterLeave">
-    <div v-show="show" class="vc-toast" :class="classes" :style="styles">
-      <i class="vc-toast-icon" :class="iconClass" v-if="iconClass !== ''" />
-      <span class="vc-toast-text">{{message}}</span>
-    </div>
-  </transition>
+  <div :class="className">
+    <div v-if="mask" class="vc-toast-mask" />
+    <transition name="vc-toast" @after-leave="afterLeave">
+      <div v-show="show" :class="['vc-toast', `is-${this.position}`]" :style="styles">
+        <i v-if="iconClass !== ''" class="vc-toast-icon" :class="iconClass" />
+        <span class="vc-toast-text">{{message}}</span>
+      </div>
+    </transition>
+  </div>
 </template>
 <script>
   export default {
@@ -22,6 +25,10 @@
       iconClass: {
         type: String,
         default: ''
+      },
+      mask: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
@@ -30,20 +37,15 @@
       }
     },
     computed: {
-      classes () {
-        const cls = []
-        if (this.className) cls.push(this.className)
-        cls.push(`is-${this.position}`)
-        return cls
-      },
       styles () {
-        const padding = this.iconClass ? '.6em 2em' : '.5em 1em'
+        const padding = this.iconClass ? '.6em 2em' : '.4em .8em'
         return { padding }
       }
     },
     methods: {
-      afterLeave (el) {
-        el.parentNode.removeChild(el)
+      afterLeave () {
+        if (this.__destroy) this.$destroy()
+        this.$el.parentNode.removeChild(this.$el)
       }
     }
   }

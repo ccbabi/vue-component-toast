@@ -9,7 +9,7 @@ $ npm install --save vue-component-toast
 ### Npm
 ```javascript
 import toast from 'vue-component-toast'
-import 'vue-component-toast/dist/css/vc-toast.css'
+import 'vue-component-toast/dist/css/vc-toast.min.css'
 
 // Vue.use(toast, [<global-option>])
 Vue.use(toast)
@@ -44,10 +44,11 @@ vm.$toast({ message: 'this is the prompt message.' })
 | :--- | :--- | :--- | :--- | :--- |
 | message | String |  |  | The prompt message |
 | position | String | 'middle' | 'top', 'middle', 'bottom' | The location of the toast |
-| duration | Number | 3000 |  | Duration (in milliseconds), if -1 does not automatically close, the call instance close method can be manually closed |
+| duration | Number | 3000 |  | If it is less than or equal to 0, it means you need to close it manually  |
 | className | String | | | The class name of Toast. You can add styles to it |
 | iconClass | String | | | The class name of the icon icon |
-| override | Boolean | true | true, false | True means to clear all previous instances, using a new instance, or false, to use a new instance each time |
+| override | Boolean | true | | Overrides the prompt for the specified location |
+| mask | Boolean | false | | No page interaction |
 
 ## Toast
 ### Instance methods
