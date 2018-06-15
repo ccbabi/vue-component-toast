@@ -1,6 +1,6 @@
 <template>
   <div :class="className">
-    <div v-if="mask" class="vc-toast-mask" />
+    <div v-if="mask" class="vc-toast-mask" @touchmove="touchmove" />
     <transition name="vc-toast" @after-leave="afterLeave">
       <div v-show="show" :class="['vc-toast', `is-${this.position}`]" :style="styles">
         <i v-if="iconClass !== ''" class="vc-toast-icon" :class="iconClass" />
@@ -46,6 +46,10 @@
       afterLeave () {
         if (this.__destroy) this.$destroy()
         this.$el.parentNode.removeChild(this.$el)
+      },
+      touchmove (e) {
+        e.preventDefault()
+        e.stopPropagation()
       }
     }
   }

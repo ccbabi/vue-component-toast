@@ -53,6 +53,10 @@
       afterLeave: function afterLeave() {
         if (this.__destroy) this.$destroy();
         this.$el.parentNode.removeChild(this.$el);
+      },
+      touchmove: function touchmove(e) {
+        e.preventDefault();
+        e.stopPropagation();
       }
     }
   };
@@ -61,7 +65,7 @@
 
   /* template */
   var __vue_render__ = function __vue_render__() {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { class: _vm.className }, [_vm.mask ? _c('div', { staticClass: "vc-toast-mask" }) : _vm._e(), _vm._v(" "), _c('transition', { attrs: { "name": "vc-toast" }, on: { "after-leave": _vm.afterLeave } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.show, expression: "show" }], class: ['vc-toast', "is-" + this.position], style: _vm.styles }, [_vm.iconClass !== '' ? _c('i', { staticClass: "vc-toast-icon", class: _vm.iconClass }) : _vm._e(), _vm._v(" "), _c('span', { staticClass: "vc-toast-text" }, [_vm._v(_vm._s(_vm.message))])])])], 1);
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { class: _vm.className }, [_vm.mask ? _c('div', { staticClass: "vc-toast-mask", on: { "touchmove": _vm.touchmove } }) : _vm._e(), _vm._v(" "), _c('transition', { attrs: { "name": "vc-toast" }, on: { "after-leave": _vm.afterLeave } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.show, expression: "show" }], class: ['vc-toast', "is-" + this.position], style: _vm.styles }, [_vm.iconClass !== '' ? _c('i', { staticClass: "vc-toast-icon", class: _vm.iconClass }) : _vm._e(), _vm._v(" "), _c('span', { staticClass: "vc-toast-text" }, [_vm._v(_vm._s(_vm.message))])])])], 1);
   };
   var __vue_staticRenderFns__ = [];
 
@@ -180,10 +184,11 @@
     mask: false
   };
 
-  var instancePoll = void 0;
+  var instancePoll = void 0,
+      body = void 0;
 
   function getInstancePoll(instanceFactory) {
-    var maxSize = 10;
+    var maxSize = 3;
     var defKey = Math.random().toString(36).slice(2);
     var inUseInstances = {};
     var nonUseInStances = [];
@@ -216,36 +221,35 @@
     };
   }
 
+  function __show(option) {
+    if (this.show) return this;
+    body.appendChild(this.$mount().$el);
+    this.__setData(option);
+    this.show = true;
+    return this;
+  }
+
+  function close() {
+    var _this = this;
+
+    if (!this.show) return;
+    this.show = false;
+    instancePoll.recycle(this, function () {
+      _this.__destroy = true;
+    });
+  }
+
+  function __setData(data) {
+    var _this2 = this;
+
+    Object.keys(def).forEach(function (prop) {
+      _this2[prop] = data[prop];
+    });
+  }
+
   function initToast(Vue) {
-    var body = document.body || document.body.getElementsByTagName('body')[0];
     var Toast = Vue.extend(toast);
-
-    Toast.prototype.__show = function (option) {
-      if (this.show) return this;
-      body.appendChild(this.$mount().$el);
-      this.__set(option);
-      this.show = true;
-      return this;
-    };
-
-    Toast.prototype.close = function () {
-      var _this = this;
-
-      if (!this.show) return;
-      this.show = false;
-      instancePoll.recycle(this, function () {
-        _this.__destroy = true;
-      });
-    };
-
-    Toast.prototype.__set = function (data) {
-      var _this2 = this;
-
-      Object.keys(data).forEach(function (key) {
-        _this2[key] = data[key];
-      });
-    };
-
+    Object.assign(Toast.prototype, { __show: __show, close: close, __setData: __setData });
     return Toast;
   }
 
@@ -289,6 +293,7 @@
 
   function install(Vue, useOption) {
     Vue.$toast = Vue.prototype.$toast = init(Vue, useOption);
+    body = document.body || document.querySelector('body') || document.body.getElementsByTagName('body')[0];
   }
 
   var index = { install: install };

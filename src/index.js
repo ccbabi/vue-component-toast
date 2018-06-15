@@ -13,10 +13,10 @@ const def = {
   mask: false
 }
 
-let instancePoll
+let instancePoll, body
 
 function getInstancePoll (instanceFactory) {
-  const maxSize = 10
+  const maxSize = 3
   const defKey = Math.random().toString(36).slice(2)
   const inUseInstances = {}
   const nonUseInStances = []
@@ -49,32 +49,31 @@ function getInstancePoll (instanceFactory) {
   }
 }
 
+function __show (option) {
+  if (this.show) return this
+  body.appendChild(this.$mount().$el)
+  this.__setData(option)
+  this.show = true
+  return this
+}
+
+function close () {
+  if (!this.show) return
+  this.show = false
+  instancePoll.recycle(this, () => {
+    this.__destroy = true
+  })
+}
+
+function __setData (data) {
+  Object.keys(def).forEach(prop => {
+    this[prop] = data[prop]
+  })
+}
+
 function initToast (Vue) {
-  const body = document.body || document.body.getElementsByTagName('body')[0]
   const Toast = Vue.extend(toast)
-
-  Toast.prototype.__show = function (option) {
-    if (this.show) return this
-    body.appendChild(this.$mount().$el)
-    this.__set(option)
-    this.show = true
-    return this
-  }
-
-  Toast.prototype.close = function () {
-    if (!this.show) return
-    this.show = false
-    instancePoll.recycle(this, () => {
-      this.__destroy = true
-    })
-  }
-
-  Toast.prototype.__set = function (data) {
-    Object.keys(data).forEach(key => {
-      this[key] = data[key]
-    })
-  }
-
+  Object.assign(Toast.prototype, { __show, close, __setData })
   return Toast
 }
 
@@ -114,6 +113,9 @@ function init (Vue, useOption) {
 
 function install (Vue, useOption) {
   Vue.$toast = Vue.prototype.$toast = init(Vue, useOption)
+  body = document.body ||
+    document.querySelector('body') ||
+    document.body.getElementsByTagName('body')[0]
 }
 
 export default { install }
